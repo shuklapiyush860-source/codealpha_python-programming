@@ -1,0 +1,49 @@
+def stock_portfolio_tracker():
+    stock_prices = {
+        "AAPL": 180,
+        "TSLA": 250,
+        "GOOGL": 130,
+        "MSFT": 200,
+        "AMZN": 170
+    }
+    
+    portfolio = {}
+    print("Enter the stock and quantity you own. Type 'done' when finished.")
+    
+    while True:
+        stock = input("Stock symbol: ").upper()
+        if stock == 'DONE':
+            break
+        if stock not in stock_prices:
+            print("Stock not found in list. Try again.")
+            continue
+        try:
+            qty = int(input("Quantity: "))
+            if qty < 0:
+                print("Quantity cannot be negative. Try again.")
+                continue
+            portfolio[stock] = portfolio.get(stock, 0) + qty
+        except ValueError:
+            print("Please enter a valid integer quantity.")
+    
+    total_investment = 0
+    print("\nYour Portfolio:")
+    for stock, qty in portfolio.items():
+        stock_value = stock_prices[stock] * qty
+        total_investment += stock_value
+        print(f"{stock}: {qty} shares @ {stock_prices[stock]} each = {stock_value}")
+        
+    print(f"\nTotal investment value: {total_investment}")
+    
+    save = input("Save this portfolio to file? (yes/no): ").lower()
+    if save == 'yes':
+        with open("portfolio.txt", "w") as file:
+            file.write("Stock,Quantity,Price per share,Total Value\n")
+            for stock, qty in portfolio.items():
+                line = f"{stock},{qty},{stock_prices[stock]},{stock_prices[stock] * qty}\n"
+                file.write(line)
+            file.write(f"\nTotal investment value:,{total_investment}\n")
+        print("Portfolio saved to 'portfolio.txt'.")
+
+if __name__ == "__main__":
+    stock_portfolio_tracker()
