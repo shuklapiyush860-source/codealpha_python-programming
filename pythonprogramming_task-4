@@ -1,0 +1,61 @@
+"""
+CodeAlpha Python Programming Internship
+Task 4: Basic Chatbot
+Description: A simple rule-based console chatbot that matches user input
+             with predefined responses using functions and control loops.
+"""
+
+
+def get_chatbot_response(user_input: str) -> str:
+    cleaned_input = user_input.strip().lower()
+
+    if any(
+        greet in cleaned_input for greet in ["hello", "hi", "hey", "namaste"]
+    ):
+        return "Hi there! How can I help you today?"
+
+    elif "how are you" in cleaned_input:
+        return "I'm doing great, thank you for asking! How are you doing?"
+
+    elif any(good in cleaned_input for good in ["fine", "good", "great"]):
+        return "Glad to hear that!"
+
+    elif "what is your name" in cleaned_input:
+        return (
+            "I am a simple rule-based Python chatbot created for CodeAlpha."
+        )
+
+    elif "help" in cleaned_input:
+        return "You can ask me how I am, say hello, or type 'bye' or 'exit' to quit."
+
+    elif any(
+        exit_word in cleaned_input for exit_word in ["bye", "goodbye", "exit"]
+    ):
+        return "Goodbye! Have a great day ahead!"
+
+    else:
+        return (
+            "I'm sorry, I don't understand that yet. Type 'help' for options."
+        )
+
+
+def run_chatbot():
+    print("=" * 50)
+    print("        Welcome to the CodeAlpha Chatbot!         ")
+    print("  Type 'bye' or 'exit' to end the conversation.   ")
+    print("=" * 50)
+
+    while True:
+        user_message = input("\nYou: ")
+
+        # Exit loop check
+        if user_message.strip().lower() in ["bye", "exit", "quit", "goodbye"]:
+            print(f"Chatbot: {get_chatbot_response(user_message)}")
+            break
+
+        response = get_chatbot_response(user_message)
+        print(f"Chatbot: {response}")
+
+
+if __name__ == "__main__":
+    run_chatbot()
