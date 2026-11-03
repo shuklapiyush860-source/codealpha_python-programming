@@ -1,0 +1,38 @@
+import random
+
+def hangman():
+    words = ['apple', 'banana', 'grape', 'orange', 'melon']
+    word = random.choice(words)
+    guessed_letters = []
+    max_incorrect = 6
+    incorrect_guesses = 0
+    
+    print("Welcome to Hangman! Guess the word one letter at a time.")
+    print(f"You have {max_incorrect} incorrect guesses allowed.\n")
+    
+    while incorrect_guesses < max_incorrect:
+        display_word = ''.join([letter if letter in guessed_letters else '_' for letter in word])
+        print("Word:", display_word)
+        
+        if '_' not in display_word:
+            print("Congratulations! You guessed the word correctly!")
+            break
+        
+        guess = input("Enter a letter: ").lower()
+        
+        if guess in guessed_letters:
+            print("You already guessed that letter. Try again.\n")
+            continue
+        
+        guessed_letters.append(guess)
+        
+        if guess not in word:
+            incorrect_guesses += 1
+            print(f"Incorrect! You have {max_incorrect - incorrect_guesses} tries left.\n")
+        else:
+            print("Good guess!\n")
+    else:
+        print(f"Game over! The word was '{word}'.")
+
+if __name__ == "__main__":
+    hangman()
